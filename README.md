@@ -5,7 +5,7 @@ A Moodle Availablity Condition Plugin to test for enrolled students.
 ## Overview
 
 This availability plugin allows to add activity constraints based on the
-course enrolment of a visitor. After installing the plugin teachers can add
+course enrollment of a visitor. After installing the plugin teachers can add
 activity conditions for verifying access from enrolled users, only.
 
 This plugin works only for courses with guest access and allows implementing

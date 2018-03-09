@@ -38,17 +38,27 @@ class condition extends \core_availability\condition {
      * Constructor.
      *
      * @param \stdClass $structure Data structure from JSON decode
-     * @throws \coding_exception If invalid data structure.
      */
     public function __construct($structure) {
         // nothing to do here, there are no options for this condition
     }
 
+    /**
+     * save the plugin configuration to an activity.
+     */
     public function save() {
         $result = (object)array('type' => 'enroll');
         return $result;
     }
 
+    /**
+     * verifies whether a student is enrolled or not.
+     *
+     * @param boolval $not - whether or not to negate the result
+     * @param \core_availability\info $info
+     * @param \stdClass $grabthelot
+     * @param int $userid
+     */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
         $course = $info->get_course();
         $context = \context_course::instance($course->id);
@@ -64,13 +74,21 @@ class condition extends \core_availability\condition {
         return $allow;
     }
 
+    /**
+     * returns the frontend information when the activity is visible but inaccessible
+     *
+     * @param $full
+     * @param boolval $not - whether or not to negate the result
+     * @param \core_availability\info $info
+     */
     public function get_description($full, $not, \core_availability\info $info) {
-        global $DB;
-
         return get_string($not ? 'requires_notunenrolled' : 'requires_notenrolled',
                 'availability_enrol');
     }
 
+    /**
+     * returns the debugstring (moodle requires this to be implemented).
+     */
     protected function get_debug_string() {
         return 'Enrollment';
     }

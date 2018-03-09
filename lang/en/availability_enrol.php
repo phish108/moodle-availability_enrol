@@ -23,7 +23,7 @@
  */
 
 $string['description'] = 'Allow only enrolled participants to access actovities in this course';
-$string['pluginname'] = 'Restriction by course enrollment';
+$string['pluginname'] = 'Activity restriction by course enrollment';
 $string['requires_enrolled'] = 'You are enrolled into this course';
 $string['requires_notenrolled'] = 'You must be enrolled into this course!';
 $string['requires_notunenrolled'] = 'You must be not enrolled into this course!';

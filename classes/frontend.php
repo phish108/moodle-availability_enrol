@@ -34,25 +34,32 @@ defined('MOODLE_INTERNAL') || die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class frontend extends \core_availability\frontend {
-    /** @var array Array of group info for course */
-    protected $allgroups;
-    /** @var int Course id that $allgroups is for */
-    protected $allgroupscourseid;
-
+    /**
+     * returns frontend strings
+     */
     protected function get_javascript_strings() {
         return array('requires_enrolled');
     }
 
+    /**
+     * dummy function to make moodle happy
+     */
     protected function get_javascript_init_params($course, \cm_info $cm = null,
             \section_info $section = null) {
 
         return array();
     }
 
+    /**
+     * Test if the course has the guest access activated.
+     *
+     * @param $course
+     * @param \cm_info $cm - unused
+     * @param \section_info $section - unused
+     */
     protected function allow_add($course, \cm_info $cm = null,
             \section_info $section = null) {
-        global $CFG;
-
+  
         // This condition is only availavble if guest access is active
         $instances = enrol_get_instances($course->id, false);
 
