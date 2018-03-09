@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$plugin->release = 1.0.3;
+$plugin->maturity = MATURITY_STABLE;
 $plugin->version  = 2018030900;
 $plugin->requires = 2017050500;
 $plugin->component = 'availability_enrol';
