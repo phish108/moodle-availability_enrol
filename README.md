@@ -17,7 +17,7 @@ only relevant to guests within the same course.
 # License
 
 This software is published under GPL3 and can be distritbuted under the same
-conditions as Moodle. See the [[LICENSE]] file for details.
+conditions as Moodle. See the [LICENSE file](LICENSE) for details.
 
 # Bug reports and support
 
