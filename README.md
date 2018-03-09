@@ -1,4 +1,4 @@
-# availability_enrol
+# moodle-availability_enrol
 
 A Moodle Availablity Condition Plugin to test for enrolled students.
 
