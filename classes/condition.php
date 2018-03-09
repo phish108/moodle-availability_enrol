@@ -64,13 +64,13 @@ class condition extends \core_availability\condition {
         $context = \context_course::instance($course->id);
         $allow = is_enrolled($context, $userid, '', true);
 
-            // The NOT condition applies before accessallgroups (i.e. if you
-            // set something to be available to those NOT in group X,
-            // people with accessallgroups can still access it even if
-            // they are in group X).
-            if ($not) {
-                $allow = !$allow;
-            }
+        // The NOT condition applies before accessallgroups (i.e. if you
+        // set something to be available to those NOT in group X,
+        // people with accessallgroups can still access it even if
+        // they are in group X).
+        if ($not) {
+            $allow = !$allow;
+        }
         return $allow;
     }
 

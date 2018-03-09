@@ -59,14 +59,14 @@ class frontend extends \core_availability\frontend {
      */
     protected function allow_add($course, \cm_info $cm = null,
             \section_info $section = null) {
-  
+
         // This condition is only availavble if guest access is active
         $instances = enrol_get_instances($course->id, false);
 
         foreach ($instances as $instance) {
-          if ($instance->enrol === "guest") {
-            return true;
-          }
+            if ($instance->enrol === "guest") {
+              return true;
+            }
         }
 
         return false;
