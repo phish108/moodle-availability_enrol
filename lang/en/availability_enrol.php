@@ -22,9 +22,15 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['description'] = 'Allow only enrolled participants to access actovities in this course';
+$string['description'] = 'Restrict access based on enrolment status.';
+$string['existsactiveornot'] = 'exists (active or not)';
+$string['isactive'] = 'is active';
+$string['issuspended'] = 'is suspended';
 $string['pluginname'] = 'Activity restriction by course enrollment';
-$string['requires_enrolled'] = 'You are enrolled into this course';
-$string['requires_notenrolled'] = 'You must be enrolled into this course!';
-$string['requires_notunenrolled'] = 'You must be not enrolled into this course!';
+$string['requiresenrolled'] = 'You are enrolled in this course';
+$string['requiresnotactiveenrolment'] = 'You are not enrolled in this course, or your enrolment is inactive.';
+$string['requiressuspended'] = 'Your enrolment is suspended';
+$string['requiresnotenrolled'] = 'You are not enrolled in this course';
+$string['requiresnotsuspended'] = 'Your enrolment is not suspended';
 $string['title'] = 'Enrolment';
+$string['userenrolment'] = 'User enrolment';
