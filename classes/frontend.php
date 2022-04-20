@@ -17,7 +17,7 @@
 /**
  * Front-end class.
  *
- * @package availability_enroll
+ * @package availability_enrol
  * @copyright 2018 Christian Glahn
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -34,33 +34,32 @@ defined('MOODLE_INTERNAL') || die();
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class frontend extends \core_availability\frontend {
+
     /**
-     * returns frontend strings
+     * @inheritDoc
      */
     protected function get_javascript_strings() {
-        return array('requires_enrolled');
+        return [
+            'existsactiveornot',
+            'isactive',
+            'issuspended',
+            'userenrolment',
+        ];
     }
 
     /**
-     * dummy function to make moodle happy
+     * @inheritDoc
      */
-    protected function get_javascript_init_params($course, \cm_info $cm = null,
-            \section_info $section = null) {
-
-        return array();
+    protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
+        return [];
     }
 
     /**
-     * Test if the course has the guest access activated.
-     *
-     * @param $course
-     * @param \cm_info $cm - unused
-     * @param \section_info $section - unused
+     * @inheritDoc
      */
-    protected function allow_add($course, \cm_info $cm = null,
-            \section_info $section = null) {
+    protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
 
-        // This condition is only availavble if guest access is active
+        // This condition is only availavble if guest access is active.
         $instances = enrol_get_instances($course->id, false);
 
         foreach ($instances as $instance) {

@@ -29,45 +29,54 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Condition main class.
  *
- * @package availability_enroll
+ * @package availability_enrol
  * @copyright 2018 Christian Glahn
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class condition extends \core_availability\condition {
+
+    /** Enrolled, and active. */
+    const MODE_ACTIVE = 0;
+    /** Enrolled, and suspended. */
+    const MODE_SUSPENDED = 1;
+    /** Enrolled, active or inactive, it doesn't matter. */
+    const MODE_ANY = 2;
+
+    /** @var int Constant MODE_* */
+    protected $mode = self::MODE_ACTIVE;
+
     /**
-     * Constructor.
-     *
-     * @param \stdClass $structure Data structure from JSON decode
+     * @inheritDoc
      */
     public function __construct($structure) {
-        // nothing to do here, there are no options for this condition
+        if (isset($structure->mode)) {
+            $this->mode = (int) $structure->mode;
+        }
     }
 
     /**
-     * save the plugin configuration to an activity.
+     * @inheritDoc
      */
     public function save() {
-        $result = (object)array('type' => 'enroll');
-        return $result;
+        return ['mode' => $this->mode];
     }
 
     /**
-     * verifies whether a student is enrolled or not.
-     *
-     * @param boolval $not - whether or not to negate the result
-     * @param \core_availability\info $info
-     * @param \stdClass $grabthelot
-     * @param int $userid
+     * @inheritDoc
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
         $course = $info->get_course();
         $context = \context_course::instance($course->id);
-        $allow = is_enrolled($context, $userid, '', true);
 
-        // The NOT condition applies before accessallgroups (i.e. if you
-        // set something to be available to those NOT in group X,
-        // people with accessallgroups can still access it even if
-        // they are in group X).
+        $allow = null;
+        if ($this->mode === static::MODE_SUSPENDED) {
+            $allow = is_enrolled($context, $userid, '', false) && !is_enrolled($context, $userid, '', true);
+        } else if ($this->mode === static::MODE_ANY) {
+            $allow = is_enrolled($context, $userid, '', false);
+        } else {
+            $allow = is_enrolled($context, $userid, '', true);
+        }
+
         if ($not) {
             $allow = !$allow;
         }
@@ -75,21 +84,22 @@ class condition extends \core_availability\condition {
     }
 
     /**
-     * returns the frontend information when the activity is visible but inaccessible
-     *
-     * @param $full
-     * @param boolval $not - whether or not to negate the result
-     * @param \core_availability\info $info
+     * @inheritDoc
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        return get_string($not ? 'requires_notunenrolled' : 'requires_notenrolled',
-                'availability_enrol');
+        if ($this->mode === static::MODE_SUSPENDED) {
+            return get_string($not ? 'requiresnotsuspended' : 'requiressuspended', 'availability_enrol');
+        } else if ($this->mode === static::MODE_ANY) {
+            return get_string($not ? 'requiresnotenrolled' : 'requiresenrolled', 'availability_enrol');
+        }
+        // Keep it simple and do not mention "active" enrolment in positive description.
+        return get_string($not ? 'requiresnotactiveenrolment' : 'requiresenrolled', 'availability_enrol');
     }
 
     /**
-     * returns the debugstring (moodle requires this to be implemented).
+     * @inheritDoc
      */
     protected function get_debug_string() {
-        return 'Enrollment';
+        return "{$this->mode}";
     }
 }
